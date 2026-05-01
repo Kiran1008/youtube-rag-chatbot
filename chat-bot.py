@@ -23,3 +23,7 @@ try:
 
 except TranscriptsDisabled:
     print("No captions available for this video.")
+
+
+splitter = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 200)
+splitter.create_documents([transcript])
