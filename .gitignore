@@ -1,0 +1,16 @@
+# API Keys & Environment Variables
+.env
+*.env
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# VS Code / Editor settings
+.vscode/
+
+*.ipynb
+.ipynb_checkpoints/
