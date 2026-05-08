@@ -3,7 +3,13 @@ from dotenv import load_dotenv
 import os
 
 # Load environment variables
-load_dotenv(override=True)
+try:
+    load_dotenv(override=True)
+except:
+    pass
+
+if hasattr(st, "secrets") and "GOOGLE_API_KEY" in st.secrets:
+    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from langchain_text_splitters import RecursiveCharacterTextSplitter
