@@ -12,6 +12,7 @@ if hasattr(st, "secrets") and "GOOGLE_API_KEY" in st.secrets:
     os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
+from youtube_transcript_api.proxies import WebshareProxyConfig
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.vectorstores import FAISS
@@ -142,7 +143,11 @@ def extract_video_id(url_or_id: str) -> str:
 def build_rag_chain(video_id: str):
     """Build the full RAG chain from a YouTube video ID."""
     # Step 1: Fetch transcript
-    ytt_api = YouTubeTranscriptApi()
+    proxy_config = WebshareProxyConfig(
+    proxy_username=os.environ.get("WEBSHARE_USERNAME"),
+    proxy_password=os.environ.get("WEBSHARE_PASSWORD"),
+)
+    ytt_api = YouTubeTranscriptApi(proxy_config=proxy_config)
     transcript_list = ytt_api.fetch(video_id)
     transcript = " ".join(chunk.text for chunk in transcript_list)
 
